@@ -1,37 +1,27 @@
-#åpner undermappen.
-#kompiler alle filer og kjør dem
-#ignorer "finner ikke main" errors, meld ifra om resten, i .txt fil i mappen.
-openAndRun(){
-  for d in */; do
-    echo ${d}
-    if [[ -d "${d}" ]]; then
-      #åpne dir og kjør filer
-      #javac *java
-      #java $2 2> error.log
-      #hvis feilmelding return 0, else return 1
-      return 0
-    else
-      return 1
-    fi
-  done
-}
-
-
+#tar inn 2 parametere $1=path for nedlastning fra devilry, $2=navn på kjørbart program.
 
 #tar inn innleveringenes full path og åpner den.
 cd $1
-#åpner hver mappe, og lagrer mappenavnet.
+#åpner hver students mappe og innleveringsmappen der.
 for d in */; do
-  echo ${d}
-  cd ${d}
-  if openAndRun; then
-    #save d to file.
-    echo $d >> ugler_i_mosen.txt
+  cd $d
+  cd * #har brukt $3 for spesifikk mappe hvis flere.
+  #kompilerer alle java-filer. lagrer evt. feilmelding.
+  for j in *java; do
+    if [[ "${j}"=~"\w\.java" ]]; then
+      javac $j 2>> compilorerror.log
+    fi
+  done
+  #kjør et program med innsendt navn og lagrer output og evt. feilmeldinger.
+  java $2 1> output.txt 2> error.log
+  #Hvis det finnes feilmeldinger legg  navnet i filen ugler_i_mosen.txt i mappen innsendt som $1.
+  if [[ -s "error.log" ]]; then
+    echo $d >> ../../ugler_i_mosen.txt
+  elif [[ -s "compilorerror.log" ]]; then
+    echo $d >> ../../ugler_i_mosen.txt
   fi
-  cd $1
+  #Oppretter .md-fil for tilbakemeldinger basert på en mal.
+  #touch "${d%/}-feedback.md"
+  cp "../../template.md" "${d%/}-feedback.md"
+  cd "../.."
 done
-#åpner undermappen.
-#kompiler alle filer og kjør dem
-#ignorer "finner ikke main" errors, meld ifra om resten, i .txt fil i mappen.
-#legg navnet i listen for rettede oppgaver
-#sitt igjen med en liste på brukernavn for studentmappene med feil
