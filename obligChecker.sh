@@ -22,6 +22,6 @@ for d in */; do
   fi
   #Oppretter .md-fil for tilbakemeldinger basert på en mal.
   #touch "${d%/}-feedback.md"
-  cp "../../template.md" "${d%/}-feedback.md"
   cd "../.."
+  cp "template.md" "Undone-${d%/}-feedback.md"
 done
