@@ -2,7 +2,7 @@
 
 #tar inn innleveringenes full path og åpner den.
 cd $1
-#åpner hver students mappe og innleveringsmappen der.
+#åpner hver students mappe og innleveringsmappen der. testtest
 for d in */; do
   cd $d
   cd * #har brukt $3 for spesifikk mappe hvis flere.
