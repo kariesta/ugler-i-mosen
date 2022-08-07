@@ -8,3 +8,6 @@ videre utvikling:
 - sende input til kjørende programmer.
 - timeout ved evige løkker </3.
 - samle meldinger fra linting
+
+
+Tester dette
